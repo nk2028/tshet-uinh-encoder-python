@@ -7,6 +7,8 @@
 所有重紐 = 'AB'
 所有韻 = '東冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢眞臻文欣元魂痕寒刪山仙先蕭宵肴豪歌麻陽唐庚耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
 所有聲 = '平上去入'
+重紐母 = '幫滂並明見溪羣疑影曉'
+重紐韻 = '支脂祭眞仙宵清侵鹽'
 
 def validate(母, 呼, 等, 重紐, 韻, 聲):
     assert len(母) == 1 and 母 in 所有母, 'Unexpected 母: ' + repr(母)
@@ -19,7 +21,7 @@ def validate(母, 呼, 等, 重紐, 韻, 聲):
     else:
         assert len(呼) == 1 and 呼 in 所有呼
 
-    if 韻 in '支脂祭眞仙宵清侵鹽' and 母 in '幫滂並明見溪羣疑影曉匣云以':
+    if 母 in 重紐母 and 韻 in 重紐韻:
         assert len(重紐) == 1 and 重紐 in 所有重紐
     else:
         assert 重紐 is None
@@ -53,7 +55,7 @@ def decode(s):
     if 母 in '幫滂並明' or 韻 == '模':
         呼 = None
 
-    if 韻 not in '支脂祭眞仙宵清侵鹽' or 母 not in '幫滂並明見溪羣疑影曉匣云以':
+    if 母 not in 重紐母 or 韻 not in 重紐韻:
         重紐 = None
 
     return 母, 呼, 等, 重紐, 韻, 聲
