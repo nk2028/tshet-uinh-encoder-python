@@ -9,10 +9,10 @@
 所有聲 = '平上去入'
 
 def validate(母, 呼, 等, 重紐, 韻, 聲):
-    assert len(母) == 1 and 母 in 所有母, f'Unexpected 母: {母}'
-    assert len(等) == 1 and 等 in 所有等, f'Unexpected 等: {等}'
-    assert len(韻) == 1 and 韻 in 所有韻, f'Unexpected 韻: {韻}'
-    assert len(聲) == 1 and 聲 in 所有聲, f'Unexpected 聲: {聲}'
+    assert len(母) == 1 and 母 in 所有母, 'Unexpected 母: ' + repr(母)
+    assert len(等) == 1 and 等 in 所有等, 'Unexpected 等: ' + repr(等)
+    assert len(韻) == 1 and 韻 in 所有韻, 'Unexpected 韻: ' + repr(韻)
+    assert len(聲) == 1 and 聲 in 所有聲, 'Unexpected 聲: ' + repr(聲)
 
     if 母 in '幫滂並明' or 韻 == '模':
         assert 呼 is None
