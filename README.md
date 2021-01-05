@@ -1,4 +1,4 @@
-# qieyun-encoder ![](https://github.com/nk2028/qieyun-encoder/workflows/Python%20package/badge.svg)
+# qieyun-encoder [![](https://badge.fury.io/py/qieyun-encoder.svg)](https://pypi.org/project/qieyun-encoder/) ![](https://github.com/nk2028/qieyun-encoder/workflows/Python%20package/badge.svg)
 
 《切韻》音韻地位編碼器
 
@@ -7,7 +7,7 @@ Note: this package is only intended for developers.
 ## Install
 
 ```sh
-$ pip install QieyunEncoder
+$ pip install qieyun-encoder
 ```
 
 ## Usage
