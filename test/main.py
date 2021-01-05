@@ -5,7 +5,7 @@ here = path.abspath(path.dirname(__file__))
 
 seen = set()
 
-with open(path.join(here, 'examples.txt')) as f:
+with open(path.join(here, 'examples.txt'), encoding='utf8') as f:
     next(f) # skip header
     for line in f:
         母, 呼, 等, 重紐, 韻, 聲 = line.rstrip('\n').split(',')
