@@ -1,6 +1,6 @@
 # qieyun-encoder [![](https://badge.fury.io/py/qieyun-encoder.svg)](https://pypi.org/project/qieyun-encoder/) ![](https://github.com/nk2028/qieyun-encoder/workflows/Python%20package/badge.svg)
 
-Convert a pronunciation of the Qieyun phonological system to a three-character phonological encoding.
+Convert a pronunciation in the Qieyun phonological system to a three-character phonological encoding.
 
 Note: this package is only intended for developers.
 
