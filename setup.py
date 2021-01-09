@@ -14,7 +14,7 @@ with open(path.join(here, 'src/QieyunEncoder/version.py'), encoding='utf8') as f
 setup(
     name='qieyun-encoder',
     version=__version__,
-    description='《切韻》音韻地位編碼器',
+    description='《切韻》音系音韻地位編碼器',
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/nk2028/qieyun-encoder',
