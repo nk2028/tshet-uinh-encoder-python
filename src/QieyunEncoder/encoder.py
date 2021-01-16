@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 from typing import Optional
 
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-'
@@ -13,7 +14,7 @@ from typing import Optional
 重紐韻 = '支脂祭眞仙宵清侵鹽'
 開合中立的韻 = '東冬鍾江虞模尤幽'
 
-def validate(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
+def 驗證(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
 	'''
 	驗證給定的音韻地位六要素是否合法。
 	'''
@@ -23,14 +24,14 @@ def validate(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻:
 	assert len(聲) == 1 and 聲 in 所有聲, 'Unexpected 聲: ' + repr(聲)
 
 	if 母 in '幫滂並明' or 韻 in 開合中立的韻:
-		assert 呼 is None
+		assert 呼 is None, 'Unexpected 呼: ' + repr(呼)
 	else:
-		assert len(呼) == 1 and 呼 in 所有呼
+		assert 呼 is not None and len(呼) == 1 and 呼 in 所有呼, 'Unexpected 呼: ' + repr(呼)
 
 	if 母 in 重紐母 and 韻 in 重紐韻:
-		assert len(重紐) == 1 and 重紐 in 所有重紐
+		assert 重紐 is not None and len(重紐) == 1 and 重紐 in 所有重紐, 'Unexpected 重紐: ' + repr(重紐)
 	else:
-		assert 重紐 is None
+		assert 重紐 is None, 'Unexpected 重紐: ' + repr(重紐)
 
 def to編碼(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
 	'''
@@ -40,7 +41,7 @@ def to編碼(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻:
 	'EAA'
 	```
 	'''
-	validate(母, 呼, 等, 重紐, 韻, 聲)
+	驗證(母, 呼, 等, 重紐, 韻, 聲)
 
 	母編碼 = 所有母.index(母)
 	韻編碼 = 所有韻.index(韻)
@@ -79,5 +80,43 @@ def from編碼(s: str):
 	if 母 not in 重紐母 or 韻 not in 重紐韻:
 		assert 重紐 == 'A'
 		重紐 = None
+
+	驗證(母, 呼, 等, 重紐, 韻, 聲)
+
+	return 母, 呼, 等, 重紐, 韻, 聲
+
+def to描述(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
+	'''
+	將音韻地位六要素轉換為音韻描述。
+	```
+	>>> to描述('端', None, '一', None, '東', '平')
+	'端一東平'
+	```
+	'''
+	驗證(母, 呼, 等, 重紐, 韻, 聲)
+
+	return 母 + (呼 or '') + 等 + (重紐 or '') + 韻 + 聲
+
+pattern = re.compile('([%s])([%s]?)([%s])([%s]?)([%s])([%s])' % (所有母, 所有呼, 所有等, 所有重紐, 所有韻, 所有聲))
+
+def from描述(s: str):
+	'''
+	將音韻描述轉換為音韻地位六要素。
+	```
+	>>> from描述('端一東平')
+	('端', None, '一', None, '東', '平')
+	```
+	'''
+	match = pattern.fullmatch(s)
+	assert match is not None
+
+	母 = match[1]
+	呼 = match[2] or None
+	等 = match[3]
+	重紐 = match[4] or None
+	韻 = match[5]
+	聲 = match[6]
+
+	驗證(母, 呼, 等, 重紐, 韻, 聲)
 
 	return 母, 呼, 等, 重紐, 韻, 聲
