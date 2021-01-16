@@ -110,12 +110,12 @@ def from描述(s: str):
 	match = pattern.fullmatch(s)
 	assert match is not None
 
-	母 = match[1]
-	呼 = match[2] or None
-	等 = match[3]
-	重紐 = match[4] or None
-	韻 = match[5]
-	聲 = match[6]
+	母 = match.group(1)
+	呼 = match.group(2) or None
+	等 = match.group(3)
+	重紐 = match.group(4) or None
+	韻 = match.group(5)
+	聲 = match.group(6)
 
 	驗證(母, 呼, 等, 重紐, 韻, 聲)
 
