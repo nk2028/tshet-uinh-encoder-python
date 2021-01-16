@@ -12,6 +12,8 @@ from typing import Optional
 所有聲 = '平上去入'
 重紐母 = '幫滂並明見溪羣疑影曉'
 重紐韻 = '支脂祭眞仙宵清侵鹽'
+必為開口的韻 = '咍痕欣嚴之魚臻蕭宵肴豪侯侵覃談鹽添咸銜'
+必為合口的韻 = '灰魂文凡'
 開合中立的韻 = '東冬鍾江虞模尤幽'
 
 def 驗證(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
@@ -25,6 +27,10 @@ def 驗證(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: s
 
 	if 母 in '幫滂並明' or 韻 in 開合中立的韻:
 		assert 呼 is None, 'Unexpected 呼: ' + repr(呼)
+	elif 韻 in 必為開口的韻:
+		assert 呼 == '開'
+	elif 韻 in 必為合口的韻:
+		assert 呼 == '合'
 	else:
 		assert 呼 is not None and len(呼) == 1 and 呼 in 所有呼, 'Unexpected 呼: ' + repr(呼)
 
