@@ -1,5 +1,5 @@
 from os import path
-from QieyunEncoder import encode, decode
+import QieyunEncoder
 
 here = path.abspath(path.dirname(__file__))
 
@@ -11,10 +11,10 @@ def roundtrip(母, 呼, 等, 重紐, 韻, 聲):
 
 	用於測試轉換是否出現異常，以及轉換結果與轉換前是否一致。
 	'''
-	encoded = encode(母, 呼, 等, 重紐, 韻, 聲)
+	encoded = QieyunEncoder.to編碼(母, 呼, 等, 重紐, 韻, 聲)
 	assert encoded not in seen
 	seen.add(encoded)
-	decoded = decode(encoded)
+	decoded = QieyunEncoder.from編碼(encoded)
 	assert decoded == (母, 呼, 等, 重紐, 韻, 聲)
 
 def test():

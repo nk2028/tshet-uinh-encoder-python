@@ -13,9 +13,9 @@ $ pip install qieyun-encoder
 ## Usage
 
 ```python
->>> from QieyunEncoder import encode, decode
->>> encode('端', '開', '一', None, '東', '平')
+>>> import QieyunEncoder
+>>> QieyunEncoder.to編碼('端', None, '一', None, '東', '平')
 'EAA'
->>> decode('EAA')
-('端', '開', '一', None, '東', '平')
+>>> QieyunEncoder.from編碼('EAA')
+('端', None, '一', None, '東', '平')
 ```

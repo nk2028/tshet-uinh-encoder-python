@@ -11,6 +11,7 @@ from typing import Optional
 所有聲 = '平上去入'
 重紐母 = '幫滂並明見溪羣疑影曉'
 重紐韻 = '支脂祭眞仙宵清侵鹽'
+開合中立的韻 = '東冬鍾江虞模尤幽'
 
 def validate(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
 	'''
@@ -21,7 +22,7 @@ def validate(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻:
 	assert len(韻) == 1 and 韻 in 所有韻, 'Unexpected 韻: ' + repr(韻)
 	assert len(聲) == 1 and 聲 in 所有聲, 'Unexpected 聲: ' + repr(聲)
 
-	if 母 in '幫滂並明' or 韻 == '模':
+	if 母 in '幫滂並明' or 韻 in 開合中立的韻:
 		assert 呼 is None
 	else:
 		assert len(呼) == 1 and 呼 in 所有呼
@@ -31,11 +32,11 @@ def validate(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻:
 	else:
 		assert 重紐 is None
 
-def encode(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
+def to編碼(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
 	'''
 	將音韻地位六要素轉換為音韻編碼。
 	```
-	>>> encode('端', '開', '一', None, '東', '平')
+	>>> to編碼('端', None, '一', None, '東', '平')
 	'EAA'
 	```
 	'''
@@ -47,12 +48,12 @@ def encode(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: s
 
 	return 編碼表[母編碼] + 編碼表[韻編碼] + 編碼表[其他編碼]
 
-def decode(s: str):
+def from編碼(s: str):
 	'''
 	將音韻編碼轉換為音韻地位六要素。
 	```
-	>>> decode('EAA')
-	('端', '開', '一', None, '東', '平')
+	>>> from編碼('EAA')
+	('端', None, '一', None, '東', '平')
 	```
 	'''
 	母編碼 = 編碼表.index(s[0])
@@ -71,7 +72,7 @@ def decode(s: str):
 	重紐 = 所有重紐[重紐編碼]
 	聲 = 所有聲[聲編碼]
 
-	if 母 in '幫滂並明' or 韻 == '模':
+	if 母 in '幫滂並明' or 韻 in 開合中立的韻:
 		assert 呼 == '開'
 		呼 = None
 
