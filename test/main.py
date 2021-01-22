@@ -3,9 +3,6 @@ import QieyunEncoder
 
 here = path.abspath(path.dirname(__file__))
 
-seen1 = set()
-seen2 = set()
-
 def roundtrip1(母, 呼, 等, 重紐, 韻, 聲):
 	'''
 	將音韻地位六要素轉換為音韻編碼，再將音韻編碼轉換為音韻地位六要素。
@@ -13,8 +10,6 @@ def roundtrip1(母, 呼, 等, 重紐, 韻, 聲):
 	用於測試轉換是否出現異常，以及轉換結果與轉換前是否一致。
 	'''
 	編碼 = QieyunEncoder.to編碼(母, 呼, 等, 重紐, 韻, 聲)
-	assert 編碼 not in seen1, '音韻編碼 should be unique'
-	seen1.add(編碼)
 	decoded = QieyunEncoder.from編碼(編碼)
 	assert decoded == (母, 呼, 等, 重紐, 韻, 聲)
 
@@ -25,8 +20,6 @@ def roundtrip2(母, 呼, 等, 重紐, 韻, 聲):
 	用於測試轉換是否出現異常，以及轉換結果與轉換前是否一致。
 	'''
 	描述 = QieyunEncoder.to描述(母, 呼, 等, 重紐, 韻, 聲)
-	assert 描述 not in seen2, '音韻描述 should be unique'
-	seen2.add(描述)
 	decoded = QieyunEncoder.from描述(描述)
 	assert decoded == (母, 呼, 等, 重紐, 韻, 聲)
 
