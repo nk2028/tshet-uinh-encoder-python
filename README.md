@@ -1,3 +1,7 @@
+**DISCONTINUED: The functions of this project have been merged into [qieyun-python](https://github.com/nk2028/qieyun-python).**
+
+---
+
 # qieyun-encoder [![](https://badge.fury.io/py/qieyun-encoder.svg)](https://pypi.org/project/qieyun-encoder/) ![](https://github.com/nk2028/qieyun-encoder/workflows/Python%20package/badge.svg)
 
 Convert a phonological position of the Qieyun phonological system to the three-character phonological encoding and the phonological description.
