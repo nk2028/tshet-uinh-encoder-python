@@ -8,17 +8,14 @@ here = path.abspath(path.dirname(__file__))
 with open(path.join(here, 'README.md'), encoding='utf8') as f:
     long_description = f.read()
 
-with open(path.join(here, 'src/QieyunEncoder/version.py'), encoding='utf8') as f:
-    exec(f.read())
-
 setup(
     name='qieyun-encoder',
-    version=__version__,
-    description='Convert a phonological position of the Qieyun phonological system to the three-character phonological encoding and the phonological description',
+    version='0.4.0',
+    description='A Python library for the operating the basic structure of the Qieyun phonological system',
     long_description=long_description,
     long_description_content_type='text/markdown',
-    url='https://github.com/nk2028/qieyun-encoder',
-    author='Ngiox Khyen 2028 Project',
+    url='https://github.com/nk2028/qieyun-encoder-python',
+    author='The nk2028 Project',
     author_email='support@nk2028.shn.hk',
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -37,10 +34,10 @@ setup(
     keywords='middle-chinese historical-linguistics qieyun',
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    python_requires='>=3.5, <4',
+    python_requires='>=3.6, <4',
     entry_points={},
     project_urls={
-        'Bug Reports': 'https://github.com/nk2028/qieyun-encoder/issues',
-        'Source': 'https://github.com/nk2028/qieyun-encoder',
+        'Bug Reports': 'https://github.com/nk2028/qieyun-encoder-python/issues',
+        'Source': 'https://github.com/nk2028/qieyun-encoder-python',
     }
 )
