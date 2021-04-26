@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from .version import __version__
-from .encoder import 驗證, to編碼, from編碼, to描述, from描述
+from .常量 import 常量
+from .音韻地位 import 音韻地位
+
+__version__ = '0.4.0'
