@@ -164,8 +164,11 @@ from ._拓展音韻屬性 import 母到清濁, 母到音, 母到組, 韻到攝
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢眞臻文欣元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
 
-解析音韻描述 = re.compile('([%s])([%s]?)([%s]?)([%s]?)([%s])([%s])' % (
+解析音韻描述 = re.compile('([%s])([%s])?([%s])?([%s])?([%s])([%s])' % (
     常量.所有母, 常量.所有呼, 常量.所有等, 常量.所有重紐, 常量.所有韻, 常量.所有聲))
+
+特別編碼 = {0: ('東', '一'), 1: ('東', '三'), 37: ('歌', '一'), 38: ('歌', '三'),
+        39: ('麻', '二'), 40: ('麻', '三'), 43: ('庚', '二'), 44: ('庚', '三')}
 
 
 class 音韻地位:
@@ -386,87 +389,96 @@ class 音韻地位:
         True
         ```
         '''
-        def inner(q: str):
-            if q.endswith('母'):
-                母們 = q[:-1]
-                assert len(母們) > 0, '未指定母'
-                for 母 in 母們:
-                    assert 母 in 常量.所有母, 母 + '母不存在'
-                return self.母 in 母們
+        呼, 重紐, 聲, 清濁 = self.呼, self.重紐, self.聲, self.清濁
+        prop = {'母': self.母, '等': self.等, '韻': self.韻,
+                '音': self.音, '攝': self.攝, '組': self.組}
+        check = {'母': 常量.所有母, '等': '一二三四', '韻': 常量.所有韻,
+                 '音': '脣舌牙齒喉', '攝': False, '組': False, '聲': '平上去入仄舒'}
 
-            if q.endswith('等'):
-                等們 = q[:-1]
-                assert len(等們) > 0, '未指定等'
-                for 等 in 等們:
-                    assert 等 in '一二三四', 等 + '等不存在'
-                return self.等 in 等們
+        def inner():
+            nonlocal 表達式
+            match = []
+            array = [[]]
+            state = True
 
-            if q.endswith('韻'):
-                韻們 = q[:-1]
-                assert len(韻們) > 0, '未指定韻'
-                for 韻 in 韻們:
-                    assert 韻 in 常量.所有韻, 韻 + '韻不存在'
-                return self.韻 in 韻們
+            def judge():
+                nonlocal state, match
+                assert state, '非預期的運算子' if match[1] else '括號未匹配' if match[0] == '\0' else '非預期的閉括號'
+                state = False
 
-            if q.endswith('聲'):
-                聲們 = q[:-1]
-                assert len(聲們) > 0, '未指定聲'
+            def eat(content: str):
+                nonlocal match, 表達式
+                match = re.match(content, 表達式)
+                if match:
+                    表達式 = 表達式[len(match[0]):]
+                    return True
+                else:
+                    return False
 
-                def equal聲(聲: str) -> bool:
-                    if 聲 in '平上去入':
-                        return self.聲 == 聲
-                    if 聲 == '仄':
-                        return self.聲 != '平'
-                    if 聲 == '舒':
-                        return self.聲 != '入'
-                    raise AssertionError(聲 + '聲不存在')
-                return any(equal聲(聲) for 聲 in 聲們)
+            def parse():
+                nonlocal match
+                if eat('^(?:(.+?)([母等韻音攝組聲])|((開|合)口|開合中立)|重紐(A|B)類|([全次][清濁]))'):
+                    項 = match[2]
+                    if 項:
+                        if check[項]:
+                            for i in match[1]:
+                                assert i in check[項], i + 項 + '不存在'
+                        return any((lambda x: 聲 == x == (not x))({'仄': '平', '舒': '入'}.get(i))
+                                   for i in match[1]) if 項 == '聲' else prop[項] in match[1]
+                    if match[3]:
+                        return 呼 == match[4]
+                    if match[5]:
+                        return 重紐 == match[5]
+                    if match[6]:
+                        return 清濁 == match[6]
+                eat('^(.*?)(?=[&|!^非或且和及()（） \u3000]|and|or|not|$)')
+                raise AssertionError('無效的表達式：' + match[0])
 
-            if q.endswith('組'):
-                組們 = q[:-1]
-                assert len(組們) > 0, '未指定組'
-                # TODO: 所有組
-                # for 組 in 組們:
-                #     assert 組 in 所有組, 組 + '組不存在'
-                return self.組 is not None and self.組 in 組們
+            while 表達式:
+                eat('^[ \u3000]*')
+                if eat('^[)）\0]'):
+                    judge()
+                    return any(map(all, array))
+                elif eat('^([|或 \u3000]|or)+'):
+                    judge()
+                    array.append([])
+                elif eat('^([&且和及 \u3000]|and)+'):
+                    judge()
+                elif eat('^([!^非 \u3000]|not)*([(（]?)'):
+                    array[-1].append(not (len(re.findall('[!^非]|not', match[0])) & 1)
+                                     == (inner() if match[2] else parse()))
+                    state = True
+            raise AssertionError('括號未匹配')
 
-            if q.endswith('音'):
-                音們 = q[:-1]
-                assert len(音們) > 0, '未指定音'
-                for 音 in 音們:
-                    assert 音 in '脣舌牙齒喉', 音 + '音不存在'
-                return self.音 in 音們
+        表達式 += '\0'
+        return inner()
 
-            if q.endswith('攝'):
-                攝們 = q[:-1]
-                assert len(攝們) > 0, '未指定攝'
-                # TODO: 所有攝
-                # for 攝 in 攝們:
-                #     assert 攝 in 所有攝, 攝 + '攝不存在'
-                return self.攝 in 攝們
+    def 判斷(self, 條件: dict):
+        '''
+        判斷音韻地位是否符合給定的音韻表達式，傳回用户指定的值。
 
-            if q == '開口':
-                return self.呼 == '開'
-            if q == '合口':
-                return self.呼 == '合'
-            if q == '開合中立':
-                return self.呼 is None
-            if q == '重紐A類':
-                return self.重紐 == 'A'
-            if q == '重紐B類':
-                return self.重紐 == 'B'
-            if q == '全清':
-                return self.清濁 == '全清'
-            if q == '次清':
-                return self.清濁 == '次清'
-            if q == '全濁':
-                return self.清濁 == '全濁'
-            if q == '次濁':
-                return self.清濁 == '次濁'
-
-            raise AssertionError('無此運算符：' + q)
-
-        return any(all(inner(q) for q in p.split(' ')) for p in 表達式.split(' 或 '))
+        ```python
+        >>> Qieyun.音韻地位.from描述('幫三凡入').判斷({
+                '曉母': 'h',
+                '匣母': {
+                    '合口 或 模韻': 'j',
+                    None: 'h'
+                },
+                '影云以母': {
+                    '三四等': 'j',
+                    None: ''
+                }
+            })
+        None
+        ```
+        '''
+        for condition in 條件:
+            if condition and self.屬於(condition):
+                表達式 = 條件[condition]
+                result = self.判斷(表達式) if isinstance(表達式, dict) else 表達式
+                if result is not None:
+                    return result
+        return 條件.get(None)
 
     def __eq__(self, that):
         if not isinstance(that, 音韻地位):
@@ -532,30 +544,8 @@ class 音韻地位:
         重紐 = 常量.所有重紐[重紐編碼]
         聲 = 常量.所有聲[聲編碼]
 
-        if 韻編碼 == 0:
-            韻 = '東'
-            等 = '一'
-        elif 韻編碼 == 1:
-            韻 = '東'
-            等 = '三'
-        elif 韻編碼 == 37:
-            韻 = '歌'
-            等 = '一'
-        elif 韻編碼 == 38:
-            韻 = '歌'
-            等 = '三'
-        elif 韻編碼 == 39:
-            韻 = '麻'
-            等 = '二'
-        elif 韻編碼 == 40:
-            韻 = '麻'
-            等 = '三'
-        elif 韻編碼 == 43:
-            韻 = '庚'
-            等 = '二'
-        elif 韻編碼 == 44:
-            韻 = '庚'
-            等 = '三'
+        if 韻編碼 in 特別編碼:
+            韻, 等 = 特別編碼[韻編碼]
         else:
             韻 = 韻順序表[韻編碼]
             if 韻 in 常量.一等韻:
@@ -589,12 +579,7 @@ class 音韻地位:
         match = 解析音韻描述.fullmatch(描述)
         assert match is not None
 
-        母 = match.group(1)
-        呼 = match.group(2) or None
-        等 = match.group(3) or None
-        重紐 = match.group(4) or None
-        韻 = match.group(5)
-        聲 = match.group(6)
+        母, 呼, 等, 重紐, 韻, 聲 = match.groups()
 
         if 呼 is None and 母 not in '幫滂並明':
             if 韻 in 常量.必爲開口的韻:
