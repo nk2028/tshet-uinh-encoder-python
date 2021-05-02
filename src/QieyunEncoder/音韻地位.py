@@ -243,6 +243,20 @@ class 音韻地位:
         return 韻到攝[self.韻]
 
     @property
+    def 韻別(self) -> str:
+        '''
+        韻別（陰聲韻、陽聲韻、入聲韻）。
+
+        ```python
+        >>> Qieyun.音韻地位.from描述('幫三凡入').韻別
+        '入'
+        >>> Qieyun.音韻地位.from描述('羣開三A支平').韻別
+        '陰'
+        ```
+        '''
+        return '陰' if self.韻 in 常量.陰聲韻 else '入' if self.聲 == '入' else '陽'
+
+    @property
     def 描述(self) -> str:
         '''
         音韻描述。
@@ -389,12 +403,6 @@ class 音韻地位:
         True
         ```
         '''
-        呼, 重紐, 聲, 清濁 = self.呼, self.重紐, self.聲, self.清濁
-        prop = {'母': self.母, '等': self.等, '韻': self.韻,
-                '音': self.音, '攝': self.攝, '組': self.組}
-        check = {'母': 常量.所有母, '等': '一二三四', '韻': 常量.所有韻,
-                 '音': '脣舌牙齒喉', '攝': False, '組': False, '聲': '平上去入仄舒'}
-
         def inner():
             nonlocal 表達式
             match = []
@@ -413,24 +421,30 @@ class 音韻地位:
                     表達式 = 表達式[len(match[0]):]
                     return True
                 else:
+                    match = []
                     return False
 
             def parse():
                 nonlocal match
-                if eat('^(?:(.+?)([母等韻音攝組聲])|((開|合)口|開合中立)|重紐(A|B)類|([全次][清濁]))'):
-                    項 = match[2]
-                    if 項:
-                        if check[項]:
-                            for i in match[1]:
-                                assert i in check[項], i + 項 + '不存在'
-                        return any((lambda x: 聲 == x == (not x))({'仄': '平', '舒': '入'}.get(i))
-                                   for i in match[1]) if 項 == '聲' else prop[項] in match[1]
-                    if match[3]:
-                        return 呼 == match[4]
-                    if match[5]:
-                        return 重紐 == match[5]
-                    if match[6]:
-                        return 清濁 == match[6]
+                if eat('^([陰陽入])聲韻'):
+                    return self.韻別 == match[1]
+                if eat('^(輕脣|次入)韻'):
+                    return self.韻 in getattr(常量, match[0])
+                if eat('^(仄|舒)聲'):
+                    return self.聲 != {'仄': '平', '舒': '入'}[match[1]]
+                if eat('^((開|合)口|開合中立)'):
+                    return self.呼 == match[2]
+                if eat('^重紐(A|B)類'):
+                    return self.重紐 == match[1]
+                if eat('^(清|濁)音'):
+                    return self.清濁[1] == match[1]
+                if eat('^[全次][清濁]'):
+                    return self.清濁 == match[0]
+                if eat('^(.+?)([母等韻音攝組聲])'):
+                    check = getattr(常量, '所有' + match[2]) + ' \u3000'
+                    list = [i for i in match[1] if i not in check]
+                    assert not len(list), list + match[2] + '不存在'
+                    return getattr(self, match[2]) in match[1]
                 eat('^(.*?)(?=[&|!^非或且和及()（） \u3000]|and|or|not|$)')
                 raise AssertionError('無效的表達式：' + match[0])
 
@@ -453,7 +467,7 @@ class 音韻地位:
         表達式 += '\0'
         return inner()
 
-    def 判斷(self, 條件: dict):
+    def 判斷(self, 條件: dict, strict: bool = False):
         '''
         判斷音韻地位是否符合給定的音韻表達式，傳回用户指定的值。
 
@@ -475,10 +489,12 @@ class 音韻地位:
         for condition in 條件:
             if condition and self.屬於(condition):
                 表達式 = 條件[condition]
-                result = self.判斷(表達式) if isinstance(表達式, dict) else 表達式
+                result = self.判斷(表達式, strict) if isinstance(表達式, dict) else 表達式
                 if result is not None:
                     return result
-        return 條件.get(None)
+        result = 條件.get(None)
+        assert not strict or result is not None, '未涵蓋所有條件'
+        return result
 
     def __eq__(self, that):
         if not isinstance(that, 音韻地位):
