@@ -394,6 +394,37 @@ class 音韻地位:
         '''
         判斷音韻地位是否符合給定的音韻表達式。
 
+        Args:
+            表達式 (str): 描述音韻地位的字串。
+
+                字串中音韻地位的描述格式：
+
+                * 音韻地位六要素：`……母`, `……等`, `……韻`, `……聲`, `開口`, `合口`, `開合中立`, `重紐A類`, `重紐B類`
+                * 拓展音韻地位：`……組`, `……音`, `……攝`, `全清`, `次清`, `全濁`, `次濁`, `清音`, `濁音`
+                * 其他表達式：`陰聲韻`, `陽聲韻`, `入聲韻`, `輕脣韻`, `次入韻`, `仄聲`, `舒聲`
+
+                支援的運算子：
+
+                * AND 運算：`且`, `和`, `及`, `and`, `&`, `&&`
+                * &ensp; OR 運算：`或`, `or`, `|`, `||`
+                * NOT 運算：`非`, `not`, `~`, `!`
+                * 括號：`(……)`, `（……）`
+
+                除固定表達式不能以空格隔開（例如 `開口`, `舒聲` 不可寫成 `開　口`, `舒　聲`）外，其餘空格會被省略。
+
+                AND 運算子可省略。
+
+                例如以下三者等價：
+                * `(端精組 且 入聲) 或 (以母 且 四等 且 去聲)`
+                * `端 精 組 入聲 或 以母 四等 去聲`
+                * `端精組入聲或以母四等去聲`
+
+        Returns:
+            bool: 若描述音韻地位的字串符合該音韻地位，回傳 `True`；否則回傳 `False`。
+
+        Raises:
+            AssertionError: `非預期的運算子`, `括號未匹配`, `非預期的閉括號`
+
         ```python
         >>> Qieyun.音韻地位.from描述('幫三凡入').屬於('章母')
         False
@@ -445,7 +476,7 @@ class 音韻地位:
                     list = [i for i in match[1] if i not in check]
                     assert not len(list), list + match[2] + '不存在'
                     return getattr(self, match[2]) in match[1]
-                eat('^(.*?)(?=[&|!^非或且和及()（） \u3000]|and|or|not|$)')
+                eat('^(.*?)(?=[&|!~非或且和及()（） \u3000]|and|or|not|$)')
                 raise AssertionError('無效的表達式：' + match[0])
 
             while 表達式:
@@ -458,8 +489,8 @@ class 音韻地位:
                     array.append([])
                 elif eat('^([&且和及 \u3000]|and)+'):
                     judge()
-                elif eat('^([!^非 \u3000]|not)*([(（]?)'):
-                    array[-1].append(not (len(re.findall('[!^非]|not', match[0])) & 1)
+                elif eat('^([!~非 \u3000]|not)*([(（]?)'):
+                    array[-1].append(not (len(re.findall('[!~非]|not', match[0])) & 1)
                                      == (inner() if match[2] else parse()))
                     state = True
             raise AssertionError('括號未匹配')
@@ -469,21 +500,55 @@ class 音韻地位:
 
     def 判斷(self, 條件: dict, strict: bool = False):
         '''
-        判斷音韻地位是否符合給定的音韻表達式，傳回用户指定的值。
+        判斷音韻地位是否符合給定的音韻表達式，傳回指定值。
+
+        Args:
+            條件 (dict): 音韻地位條件，以表達式作鍵，傳回結果或遞迴條件作值。
+
+                以 `None` 作鍵以指定後備結果。
+
+                表達式為描述音韻地位的字串，用於屬於函數。
+            strict (bool): 設定為 `True` 時，若未涵蓋所有條件且沒有指定 `None` 鍵（或 `None` 鍵的值為 `None`），會拋出錯誤。
+
+                設定為 `False` 時則會跳到下一鍵。
+
+                預設為 `False`。
+
+        Returns:
+            any: 指定值。
+
+        Raises:
+            AssertionError: `非預期的運算子`, `括號未匹配`, `非預期的閉括號`, `未涵蓋所有條件`
 
         ```python
         >>> Qieyun.音韻地位.from描述('幫三凡入').判斷({
-                '曉母': 'h',
-                '匣母': {
-                    '合口 或 模韻': 'j',
-                    None: 'h'
+                '幫組': {
+                    '止臻攝 重紐B類': True,
+                    '流通深咸攝': False,
+                    '二等 梗蟹攝': False,
+                    '一二等': True,
+                    '鍾虞文陽韻': True,
+                    '元韻': True
                 },
-                '影云以母': {
-                    '三四等': 'j',
-                    None: ''
-                }
+                '合口': True,
+                '鍾虞模韻': True,
+                '江韻 (知莊組 或 孃來母)': True,
+                None: False
             })
-        None
+        False
+        >>> Qieyun.音韻地位.from描述('幫三凡入').判斷({
+                '清音': {
+                    '平入聲': 1,
+                    '上　聲': 2,
+                    '去　聲': 3
+                },
+                '濁音': {
+                    '平　　聲': 4,
+                    '次濁上聲': 5,
+                    '上去入聲': 6
+                }
+            }, strict=True)
+        1
         ```
         '''
         for condition in 條件:
