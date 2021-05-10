@@ -1,19 +1,25 @@
 # -*- coding: utf-8 -*-
 
+'''
+根據反切規律自動完成反切過程。
+'''
+
 from typing import List
 from .常量 import 常量
 from .音韻地位 import 音韻地位
 from ._拓展音韻屬性 import 母到標準等
 
 
-def jointer(xs: List[str]):
+def _jointer(xs: List[str]):
     '''
+    將多個字串以頓號和「或」字連接。
+
     ```python
-    >>> jointer(['A'])
+    >>> _jointer(['A'])
     'A'
-    >>> jointer(['A', 'B'])
+    >>> _jointer(['A', 'B'])
     'A或B'
-    >>> jointer(['A', 'B', 'C', 'D'])
+    >>> _jointer(['A', 'B', 'C', 'D'])
     'A、B、C或D'
     ```
     '''
@@ -24,8 +30,9 @@ def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, �
     '''
     自動執行反切。
 
-    當可選參數「顯示步驟」爲 `False` 時，回傳所有被切字音韻地位的列表。
-    當爲 `True` 時，回傳 dict，包含「被切字音韻地位們」與「步驟」兩項。
+    當「顯示步驟」爲 `False` 時，回傳所有被切字音韻地位的列表。
+
+    當「顯示步驟」爲 `True` 時，回傳 dict，包含「被切字音韻地位們」與「步驟」兩項。
     '''
     if 類隔切:
         raise NotImplementedError
@@ -149,7 +156,7 @@ def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, �
     if not 被切字音韻地位們:
         步驟.append('故爲不合法音節')
     else:
-        步驟.append('故被切字的音韻地位爲' + jointer([
+        步驟.append('故被切字的音韻地位爲' + _jointer([
             被切字音韻地位.描述
             for 被切字音韻地位 in 被切字音韻地位們
         ]))
