@@ -10,7 +10,7 @@ with open(path.join(here, 'README.md'), encoding='utf8') as f:
 
 setup(
     name='qieyun-encoder',
-    version='0.4.0',
+    version='0.4.1',
     description='A Python library for the operating the basic structure of the Qieyun phonological system',
     long_description=long_description,
     long_description_content_type='text/markdown',
