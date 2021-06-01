@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>QieyunEncoder API documentation</title>
-<meta name="description" content="" />
+<title>QieyunEncoder.工具.正則化韻 API documentation</title>
+<meta name="description" content="將切韻系韻書的韻目轉換爲韻。" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,42 +19,141 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>QieyunEncoder</code></h1>
+<h1 class="title">Module <code>QieyunEncoder.工具.正則化韻</code></h1>
 </header>
 <section id="section-intro">
+<p>將切韻系韻書的韻目轉換爲韻。</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python"># -*- coding: utf-8 -*-
 
-from .常量 import 常量
-from .音韻地位 import 音韻地位
-from .工具 import 反切, 正則化韻
+&#39;&#39;&#39;
+將切韻系韻書的韻目轉換爲韻。
+&#39;&#39;&#39;
 
-__version__ = &#39;0.4.2&#39;</code></pre>
+_非標準韻表 = [
+    &#39;東董蕫送屋&#39;,
+    &#39;冬湩宋沃𣵽&#39;,
+    &#39;鍾腫用燭&#39;,
+    &#39;江講絳覺&#39;,
+    &#39;支紙寘&#39;,
+    &#39;脂旨至&#39;,
+    &#39;之止志&#39;,
+    &#39;微尾未&#39;,
+    &#39;魚語御&#39;,
+    &#39;虞麌噳遇&#39;,
+    &#39;模姥暮莫&#39;,
+    &#39;齊薺霽&#39;,
+    &#39;佳蟹卦&#39;,
+    &#39;皆駭怪&#39;,
+    &#39;灰賄隊&#39;,
+    &#39;咍海代&#39;,
+    &#39;眞諄軫準震稕質術&#39;,
+    &#39;臻𧤛櫬櫛&#39;,
+    &#39;文吻問物勿&#39;,
+    &#39;欣隱焮迄&#39;,
+    &#39;元阮願月&#39;,
+    &#39;魂混慁圂沒䰟&#39;,
+    &#39;痕很恨麧&#39;,
+    &#39;寒旱翰曷桓緩換末&#39;,
+    &#39;桓緩換末&#39;,
+    &#39;刪𠜂潸諫鎋舝&#39;,
+    &#39;山產襇黠&#39;,
+    &#39;先銑霰屑㞕&#39;,
+    &#39;仙㒨獮𤣗線薛𧀼&#39;,
+    &#39;蕭篠筱嘯&#39;,
+    &#39;宵小笑霄𥬇&#39;,
+    &#39;肴爻巧效&#39;,
+    &#39;豪晧号&#39;,
+    &#39;歌戈哿果箇過&#39;,
+    &#39;麻馬禡&#39;,
+    &#39;陽養漾藥&#39;,
+    &#39;唐蕩宕鐸&#39;,
+    &#39;庚梗映敬陌&#39;,
+    &#39;耕耿諍麥&#39;,
+    &#39;清靜勁昔㫺&#39;,
+    &#39;青迥徑錫&#39;,
+    &#39;蒸拯抍證職&#39;,
+    &#39;登等嶝隥德&#39;,
+    &#39;尤有宥&#39;,
+    &#39;侯矦厚𠪀候𠊱&#39;,
+    &#39;幽黝幼&#39;,
+    &#39;侵寑沁緝寢&#39;,
+    &#39;覃𧟹感勘合&#39;,
+    &#39;談敢𠭖闞盍盇&#39;,
+    &#39;鹽琰豔驗葉&#39;,
+    &#39;添沾忝㮇栝怗帖&#39;,
+    &#39;咸豏陷洽&#39;,
+    &#39;銜檻鑑狎&#39;,
+    &#39;嚴儼釅㽉業&#39;,
+    &#39;凡范梵乏&#39;,
+    &#39;祭&#39;,
+    &#39;廢&#39;,
+    &#39;泰&#39;,
+    &#39;夬𡗒&#39;,
+]
+
+_標準韻映射表 = {非標準韻: 非標準韻們[0] for 非標準韻們 in _非標準韻表 for 非標準韻 in 非標準韻們}
+
+
+def 正則化韻(韻: str):
+    &#39;&#39;&#39;
+    將切韻系韻書的韻目轉換爲韻。
+
+    ```python
+    &gt;&gt;&gt; 正則化韻(&#39;物&#39;)
+    &#39;文&#39;
+    &gt;&gt;&gt; 正則化韻(&#39;敬&#39;)
+    &#39;庚&#39;
+    &gt;&gt;&gt; 正則化韻(&#39;東&#39;)
+    &#39;東&#39;
+    ```
+    &#39;&#39;&#39;
+    return _標準韻映射表[韻]</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt><code class="name"><a title="QieyunEncoder.工具" href="工具/index.html">QieyunEncoder.工具</a></code></dt>
+<dt id="QieyunEncoder.工具.正則化韻.正則化韻"><code class="name flex">
+<span>def <span class="ident">正則化韻</span></span>(<span>韻: str)</span>
+</code></dt>
 <dd>
-<div class="desc"><p>與切韻音系相關的工具。</p></div>
-</dd>
-<dt><code class="name"><a title="QieyunEncoder.常量" href="常量.html">QieyunEncoder.常量</a></code></dt>
-<dd>
-<div class="desc"><p>定義音韻學常用常量。</p></div>
-</dd>
-<dt><code class="name"><a title="QieyunEncoder.音韻地位" href="音韻地位.html">QieyunEncoder.音韻地位</a></code></dt>
-<dd>
-<div class="desc"><p>定義切韻音系音韻地位及相關操作。 …</p></div>
+<div class="desc"><p>將切韻系韻書的韻目轉換爲韻。</p>
+<pre><code class="language-python">&gt;&gt;&gt; 正則化韻('物')
+'文'
+&gt;&gt;&gt; 正則化韻('敬')
+'庚'
+&gt;&gt;&gt; 正則化韻('東')
+'東'
+</code></pre></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def 正則化韻(韻: str):
+    &#39;&#39;&#39;
+    將切韻系韻書的韻目轉換爲韻。
+
+    ```python
+    &gt;&gt;&gt; 正則化韻(&#39;物&#39;)
+    &#39;文&#39;
+    &gt;&gt;&gt; 正則化韻(&#39;敬&#39;)
+    &#39;庚&#39;
+    &gt;&gt;&gt; 正則化韻(&#39;東&#39;)
+    &#39;東&#39;
+    ```
+    &#39;&#39;&#39;
+    return _標準韻映射表[韻]</code></pre>
+</details>
 </dd>
 </dl>
-</section>
-<section>
-</section>
-<section>
 </section>
 <section>
 </section>
@@ -65,11 +164,14 @@ __version__ = &#39;0.4.2&#39;</code></pre>
 <ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="QieyunEncoder.工具" href="工具/index.html">QieyunEncoder.工具</a></code></li>
-<li><code><a title="QieyunEncoder.常量" href="常量.html">QieyunEncoder.常量</a></code></li>
-<li><code><a title="QieyunEncoder.音韻地位" href="音韻地位.html">QieyunEncoder.音韻地位</a></code></li>
+<li><code><a title="QieyunEncoder.工具" href="index.html">QieyunEncoder.工具</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="QieyunEncoder.工具.正則化韻.正則化韻" href="#QieyunEncoder.工具.正則化韻.正則化韻">正則化韻</a></code></li>
 </ul>
 </li>
 </ul>

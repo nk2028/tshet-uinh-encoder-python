@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.9.2" />
-<title>QieyunEncoder.反切 API documentation</title>
-<meta name="description" content="" />
+<title>QieyunEncoder.工具.反切 API documentation</title>
+<meta name="description" content="根據反切規律自動完成反切過程。" />
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
 <link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
 <link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
@@ -19,29 +19,36 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>QieyunEncoder.反切</code></h1>
+<h1 class="title">Module <code>QieyunEncoder.工具.反切</code></h1>
 </header>
 <section id="section-intro">
+<p>根據反切規律自動完成反切過程。</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python"># -*- coding: utf-8 -*-
 
+&#39;&#39;&#39;
+根據反切規律自動完成反切過程。
+&#39;&#39;&#39;
+
 from typing import List
-from .常量 import 常量
-from .音韻地位 import 音韻地位
-from ._拓展音韻屬性 import 母到標準等
+from ..常量 import 常量
+from ..音韻地位 import 音韻地位
+from .._拓展音韻屬性 import 母到標準等
 
 
-def jointer(xs: List[str]):
+def _jointer(xs: List[str]):
     &#39;&#39;&#39;
+    將多個字串以頓號和「或」字連接。
+
     ```python
-    &gt;&gt;&gt; jointer([&#39;A&#39;])
+    &gt;&gt;&gt; _jointer([&#39;A&#39;])
     &#39;A&#39;
-    &gt;&gt;&gt; jointer([&#39;A&#39;, &#39;B&#39;])
+    &gt;&gt;&gt; _jointer([&#39;A&#39;, &#39;B&#39;])
     &#39;A或B&#39;
-    &gt;&gt;&gt; jointer([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
+    &gt;&gt;&gt; _jointer([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
     &#39;A、B、C或D&#39;
     ```
     &#39;&#39;&#39;
@@ -50,10 +57,11 @@ def jointer(xs: List[str]):
 
 def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, 顯示步驟=False, 類隔切=False):
     &#39;&#39;&#39;
-    自動執行反切。
+    根據反切規律自動完成反切過程。
 
-    當可選參數「顯示步驟」爲 `False` 時，回傳所有被切字音韻地位的列表。
-    當爲 `True` 時，回傳 dict，包含「被切字音韻地位們」與「步驟」兩項。
+    當「顯示步驟」爲 `False` 時，回傳所有被切字音韻地位的列表。
+
+    當「顯示步驟」爲 `True` 時，回傳 `dict`，包含「被切字音韻地位們」與「步驟」兩個字段。
     &#39;&#39;&#39;
     if 類隔切:
         raise NotImplementedError
@@ -177,7 +185,7 @@ def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, �
     if not 被切字音韻地位們:
         步驟.append(&#39;故爲不合法音節&#39;)
     else:
-        步驟.append(&#39;故被切字的音韻地位爲&#39; + jointer([
+        步驟.append(&#39;故被切字的音韻地位爲&#39; + _jointer([
             被切字音韻地位.描述
             for 被切字音韻地位 in 被切字音韻地位們
         ]))
@@ -198,52 +206,24 @@ def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, �
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
-<dt id="QieyunEncoder.反切.jointer"><code class="name flex">
-<span>def <span class="ident">jointer</span></span>(<span>xs: List[str])</span>
+<dt id="QieyunEncoder.工具.反切.反切"><code class="name flex">
+<span>def <span class="ident">反切</span></span>(<span>上字音韻地位: <a title="QieyunEncoder" href="../index.html">QieyunEncoder</a>.音韻地位.音韻地位, 下字音韻地位: <a title="QieyunEncoder" href="../index.html">QieyunEncoder</a>.音韻地位.音韻地位, 顯示步驟=False, 類隔切=False)</span>
 </code></dt>
 <dd>
-<div class="desc"><pre><code class="language-python">&gt;&gt;&gt; jointer(['A'])
-'A'
-&gt;&gt;&gt; jointer(['A', 'B'])
-'A或B'
-&gt;&gt;&gt; jointer(['A', 'B', 'C', 'D'])
-'A、B、C或D'
-</code></pre></div>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def jointer(xs: List[str]):
-    &#39;&#39;&#39;
-    ```python
-    &gt;&gt;&gt; jointer([&#39;A&#39;])
-    &#39;A&#39;
-    &gt;&gt;&gt; jointer([&#39;A&#39;, &#39;B&#39;])
-    &#39;A或B&#39;
-    &gt;&gt;&gt; jointer([&#39;A&#39;, &#39;B&#39;, &#39;C&#39;, &#39;D&#39;])
-    &#39;A、B、C或D&#39;
-    ```
-    &#39;&#39;&#39;
-    return &#39;&#39;.join(x + &#39;、&#39; for x in xs[:-2]) + &#39;或&#39;.join(xs[-2:])</code></pre>
-</details>
-</dd>
-<dt id="QieyunEncoder.反切.反切"><code class="name flex">
-<span>def <span class="ident">反切</span></span>(<span>上字音韻地位: <a title="QieyunEncoder" href="index.html">QieyunEncoder</a>.音韻地位.音韻地位, 下字音韻地位: <a title="QieyunEncoder" href="index.html">QieyunEncoder</a>.音韻地位.音韻地位, 顯示步驟=False, 類隔切=False)</span>
-</code></dt>
-<dd>
-<div class="desc"><p>自動執行反切。</p>
-<p>當可選參數「顯示步驟」爲 <code>False</code> 時，回傳所有被切字音韻地位的列表。
-當爲 <code>True</code> 時，回傳 dict，包含「被切字音韻地位們」與「步驟」兩項。</p></div>
+<div class="desc"><p>根據反切規律自動完成反切過程。</p>
+<p>當「顯示步驟」爲 <code>False</code> 時，回傳所有被切字音韻地位的列表。</p>
+<p>當「顯示步驟」爲 <code>True</code> 時，回傳 <code>dict</code>，包含「被切字音韻地位們」與「步驟」兩個字段。</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, 顯示步驟=False, 類隔切=False):
     &#39;&#39;&#39;
-    自動執行反切。
+    根據反切規律自動完成反切過程。
 
-    當可選參數「顯示步驟」爲 `False` 時，回傳所有被切字音韻地位的列表。
-    當爲 `True` 時，回傳 dict，包含「被切字音韻地位們」與「步驟」兩項。
+    當「顯示步驟」爲 `False` 時，回傳所有被切字音韻地位的列表。
+
+    當「顯示步驟」爲 `True` 時，回傳 `dict`，包含「被切字音韻地位們」與「步驟」兩個字段。
     &#39;&#39;&#39;
     if 類隔切:
         raise NotImplementedError
@@ -367,7 +347,7 @@ def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, �
     if not 被切字音韻地位們:
         步驟.append(&#39;故爲不合法音節&#39;)
     else:
-        步驟.append(&#39;故被切字的音韻地位爲&#39; + jointer([
+        步驟.append(&#39;故被切字的音韻地位爲&#39; + _jointer([
             被切字音韻地位.描述
             for 被切字音韻地位 in 被切字音韻地位們
         ]))
@@ -394,13 +374,12 @@ def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, �
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="QieyunEncoder" href="index.html">QieyunEncoder</a></code></li>
+<li><code><a title="QieyunEncoder.工具" href="index.html">QieyunEncoder.工具</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
-<li><code><a title="QieyunEncoder.反切.jointer" href="#QieyunEncoder.反切.jointer">jointer</a></code></li>
-<li><code><a title="QieyunEncoder.反切.反切" href="#QieyunEncoder.反切.反切">反切</a></code></li>
+<li><code><a title="QieyunEncoder.工具.反切.反切" href="#QieyunEncoder.工具.反切.反切">反切</a></code></li>
 </ul>
 </li>
 </ul>
