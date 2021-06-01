@@ -42,8 +42,8 @@ def test1():
 
 def test2():
     '''
-    測試正則化韻。
+    測試韻目到韻。
     '''
-    assert QieyunEncoder.正則化韻('物') == '文'
-    assert QieyunEncoder.正則化韻('敬') == '庚'
-    assert QieyunEncoder.正則化韻('東') == '東'
+    assert QieyunEncoder.韻目到韻('物') == '文'
+    assert QieyunEncoder.韻目到韻('敬') == '庚'
+    assert QieyunEncoder.韻目到韻('東') == '東'

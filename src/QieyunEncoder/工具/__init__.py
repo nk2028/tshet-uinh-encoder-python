@@ -5,4 +5,4 @@
 '''
 
 from .反切 import 反切
-from .正則化韻 import 正則化韻
+from .韻目到韻 import 韻目到韻
