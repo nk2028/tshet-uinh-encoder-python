@@ -5,9 +5,9 @@
 '''
 
 from typing import List
-from .常量 import 常量
-from .音韻地位 import 音韻地位
-from ._拓展音韻屬性 import 母到標準等
+from ..常量 import 常量
+from ..音韻地位 import 音韻地位
+from .._拓展音韻屬性 import 母到標準等
 
 
 def _jointer(xs: List[str]):
@@ -28,11 +28,11 @@ def _jointer(xs: List[str]):
 
 def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, 顯示步驟=False, 類隔切=False):
     '''
-    自動執行反切。
+    根據反切規律自動完成反切過程。
 
     當「顯示步驟」爲 `False` 時，回傳所有被切字音韻地位的列表。
 
-    當「顯示步驟」爲 `True` 時，回傳 dict，包含「被切字音韻地位們」與「步驟」兩項。
+    當「顯示步驟」爲 `True` 時，回傳 `dict`，包含「被切字音韻地位們」與「步驟」兩個字段。
     '''
     if 類隔切:
         raise NotImplementedError
