@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 '''
-定義切韻音系音韻地位及相關操作。
+切韻音系音韻地位及相關操作。
 
 ## 音韻屬性
 
@@ -159,8 +159,9 @@ import re
 from typing import Optional
 
 from .常量 import 常量
-from ._拓展音韻屬性 import 母到清濁, 母到音, 韻到攝
+from ._拓展音韻屬性 import 母到清濁, 韻到攝
 from .工具.母到組 import 母到組
+from .工具.母到音 import 母到音
 
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢眞臻文欣元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
@@ -210,7 +211,7 @@ class 音韻地位:
         '牙'
         ```
         '''
-        return 母到音[self.母]
+        return 母到音(self.母)
 
     @property
     def 組(self) -> Optional[str]:

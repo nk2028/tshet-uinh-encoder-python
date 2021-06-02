@@ -40,10 +40,18 @@ def test1():
             roundtrip2(母, 呼, 等, 重紐, 韻, 聲)
 
 
-def test2():
+def test_韻目到韻():
     '''
     測試韻目到韻。
     '''
     assert QieyunEncoder.韻目到韻('物') == '文'
     assert QieyunEncoder.韻目到韻('敬') == '庚'
     assert QieyunEncoder.韻目到韻('東') == '東'
+
+
+def test_母到音():
+    '''
+    測試母到音。
+    '''
+    assert QieyunEncoder.母到音('並') == '脣'
+    assert QieyunEncoder.母到音('羣') == '牙'
