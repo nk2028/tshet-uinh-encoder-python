@@ -159,7 +159,7 @@ import re
 from typing import Optional
 
 from .常量 import 常量
-from ._拓展音韻屬性 import 母到清濁
+from .工具.母到清濁 import 母到清濁
 from .工具.母到組 import 母到組
 from .工具.母到音 import 母到音
 from .工具.韻到攝 import 韻到攝
@@ -198,7 +198,7 @@ class 音韻地位:
         '全濁'
         ```
         '''
-        return 母到清濁[self.母]
+        return 母到清濁(self.母)
 
     @property
     def 音(self) -> str:

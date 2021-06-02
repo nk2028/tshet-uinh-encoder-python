@@ -49,6 +49,14 @@ def test_韻目到韻():
     assert QieyunEncoder.韻目到韻('東') == '東'
 
 
+def test_母到清濁():
+    '''
+    測試母到清濁。
+    '''
+    assert QieyunEncoder.母到清濁('端') == '全清'
+    assert QieyunEncoder.母到清濁('以') == '次濁'
+
+
 def test_母到音():
     '''
     測試母到音。
