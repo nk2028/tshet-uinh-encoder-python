@@ -55,3 +55,11 @@ def test_母到音():
     '''
     assert QieyunEncoder.母到音('並') == '脣'
     assert QieyunEncoder.母到音('羣') == '牙'
+
+
+def test_韻到攝():
+    '''
+    測試韻到攝。
+    '''
+    assert QieyunEncoder.韻到攝('冬') == '通'
+    assert QieyunEncoder.韻到攝('侵') == '深'
