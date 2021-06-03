@@ -71,3 +71,11 @@ def test_韻到攝():
     '''
     assert QieyunEncoder.韻到攝('冬') == '通'
     assert QieyunEncoder.韻到攝('侵') == '深'
+
+
+def test_欣韻和眞韻的容錯():
+    '''
+    測試欣韻和眞韻的容錯。
+    '''
+    assert QieyunEncoder.音韻地位.from描述('影開三A眞平').描述 == '影開三A真平'
+    assert QieyunEncoder.音韻地位.from描述('溪開三欣上').描述 == '溪開三殷上'
