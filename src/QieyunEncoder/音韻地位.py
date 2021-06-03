@@ -128,10 +128,10 @@
 - 止攝：支脂之微
 - 遇攝：魚虞模
 - 蟹攝：齊佳皆灰咍祭泰夬廢
-- 臻攝：眞諄臻文殷魂痕
-- 山攝：元寒桓刪山先仙
+- 臻攝：眞臻文殷魂痕
+- 山攝：元寒刪山先仙
 - 效攝：蕭宵肴豪
-- 果攝：歌戈
+- 果攝：歌
 - 假攝：麻
 - 宕攝：唐陽
 - 梗攝：庚耕清青
@@ -142,7 +142,9 @@
 
 .. hint::
 
-    《廣韻》沒有諄桓戈韻，分別併入眞寒歌韻。
+    不用諄桓戈韻，分別併入眞寒歌韻。
+
+    不用欣韻，欣韻稱爲殷韻。
 
 ### 聲
 
@@ -507,9 +509,9 @@ class 音韻地位:
         elif 韻 in 常量.四等韻:
             assert 等 == '四', 'Unexpected 等: ' + repr(等)
         elif 韻 in 常量.一三等韻:
-            assert 等 in ('一', '三'), 'Unexpected 等: ' + repr(等)
+            assert 等 in '一三', 'Unexpected 等: ' + repr(等)
         elif 韻 in 常量.二三等韻:
-            assert 等 in ('二', '三'), 'Unexpected 等: ' + repr(等)
+            assert 等 in '二三', 'Unexpected 等: ' + repr(等)
 
     @staticmethod
     def from編碼(編碼: str):
