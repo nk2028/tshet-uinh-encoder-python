@@ -157,6 +157,7 @@ import re
 from typing import Optional
 
 from .常量 import 常量
+from ._母對應的標準等 import 母對應的標準等
 from .工具.母到清濁 import 母到清濁
 from .工具.母到組 import 母到組
 from .工具.母到音 import 母到音
@@ -623,3 +624,11 @@ class 音韻地位:
 
     def __repr__(self):
         return '<音韻地位 ' + self.描述 + '>'
+
+    def is_normal(self):
+        '''
+        是 normal 的音韻地位。
+
+        例如，端母二等不是 normal 的音韻地位。
+        '''
+        return self.等 in 母對應的標準等[self.母]
