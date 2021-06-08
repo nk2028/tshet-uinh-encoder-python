@@ -7,7 +7,7 @@
 from typing import List
 from ..常量 import 常量
 from ..音韻地位 import 音韻地位
-from .._拓展音韻屬性 import 母到標準等
+from .._母對應的標準等 import 母對應的標準等
 
 
 def _jointer(xs: List[str]):
@@ -139,7 +139,7 @@ def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, �
 
     # 母對等的約束
 
-    標準等 = 母到標準等[母]
+    標準等 = 母對應的標準等[母]
     if any(等1 not in 標準等 for 等1 in 等):
         等 = ''.join(等1 for 等1 in 等 if 等1 in 標準等)
         步驟.append(f'{母}母只能爲{標準等}等')
