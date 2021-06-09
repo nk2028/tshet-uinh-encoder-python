@@ -472,11 +472,6 @@ class 音韻地位:
 
         return any(all(inner(q) for q in p.split(' ')) for p in 表達式.split(' 或 '))
 
-    def __eq__(self, that):
-        if not isinstance(that, 音韻地位):
-            return False
-        return self.描述 == that.描述
-
     @staticmethod
     def 驗證(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
         '''
@@ -622,9 +617,6 @@ class 音韻地位:
 
         return 音韻地位(母, 呼, 等, 重紐, 韻, 聲)
 
-    def __repr__(self):
-        return '<音韻地位 ' + self.描述 + '>'
-
     def is_normal(self):
         '''
         是 normal 的音韻地位。
@@ -632,3 +624,14 @@ class 音韻地位:
         例如，端母二等不是 normal 的音韻地位。
         '''
         return self.等 in 母對應的標準等[self.母]
+
+    def __repr__(self) -> str:
+        return '<音韻地位 ' + self.描述 + '>'
+
+    def __eq__(self, that) -> bool:
+        if not isinstance(that, 音韻地位):
+            return False
+        return self.最簡描述 == that.最簡描述
+
+    def __hash__(self) -> int:
+        return hash(self.最簡描述)

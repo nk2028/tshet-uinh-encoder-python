@@ -86,3 +86,11 @@ class 韻鏡位置:
 
     def __repr__(self) -> str:
         return f'<韻鏡位置 {self.描述}>'
+
+    def __eq__(self, that) -> bool:
+        if not isinstance(that, 韻鏡位置):
+            return False
+        return self.描述 == that.描述
+
+    def __hash__(self) -> int:
+        return hash(self.描述)
