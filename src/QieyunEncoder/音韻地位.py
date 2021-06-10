@@ -166,7 +166,7 @@ from .工具.韻到攝 import 韻到攝
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢真臻文殷元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
 
-解析音韻描述 = re.compile('([%s])([%s]?)([%s]?)([%s]?)([%s])([%s])' % (
+解析音韻描述 = re.compile('([%s])([%s])?([%s])?([%s])?([%s])([%s])' % (
     常量.所有母, 常量.所有呼, 常量.所有等, 常量.所有重紐, 常量.所有韻, 常量.所有聲))
 
 
@@ -588,14 +588,9 @@ class 音韻地位:
         描述 = 描述.replace('欣', '殷').replace('眞', '真')  # 容錯
 
         match = 解析音韻描述.fullmatch(描述)
-        assert match is not None
+        assert match is not None, 'Invalid 描述: ' + repr(描述)
 
-        母 = match.group(1)
-        呼 = match.group(2) or None
-        等 = match.group(3) or None
-        重紐 = match.group(4) or None
-        韻 = match.group(5)
-        聲 = match.group(6)
+        母, 呼, 等, 重紐, 韻, 聲 = match.groups()
 
         if 呼 is None and 母 not in '幫滂並明':
             if 韻 in 常量.必爲開口的韻:
