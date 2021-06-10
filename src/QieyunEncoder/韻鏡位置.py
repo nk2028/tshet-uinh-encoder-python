@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import re
 from typing import Optional, Union
 
 from .工具.韻目到韻 import 韻目到韻
@@ -32,6 +33,11 @@ for 韻鏡母號, 韻鏡母 in enumerate(_韻鏡母表):
     if len(韻鏡母) > 1:
         for 韻鏡母單字 in 韻鏡母:
             _d韻鏡母2韻鏡母號[韻鏡母單字] = 韻鏡母號
+
+_韻鏡所有母 = ''.join(_韻鏡母表)
+
+解析韻鏡位置描述 = re.compile('([%s])([%s])?([%s])([%s])([%s])' % (
+    _韻鏡所有母, 常量.所有呼, 常量.所有等, 常量.所有韻, 常量.所有聲))
 
 
 class 韻鏡位置:
@@ -88,6 +94,15 @@ class 韻鏡位置:
         if 4 <= 韻鏡母號 < 8 or 12 <= 韻鏡母號 < 17:  # 端知組、精照組
             return 韻鏡母[self.韻鏡等 in '二三']
         return 韻鏡母
+
+    @staticmethod
+    def from描述(描述: str):
+        match = 解析韻鏡位置描述.fullmatch(描述)
+        assert match is not None, 'Invalid 描述: ' + repr(描述)
+
+        母, 韻鏡開合, 韻鏡等, 韻, 聲 = match.groups()
+
+        return 韻鏡位置(母, 韻鏡開合, 韻鏡等, 韻, 聲)
 
     @property
     def 描述(self) -> str:
