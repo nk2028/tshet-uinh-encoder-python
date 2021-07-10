@@ -25,15 +25,15 @@ setup(
         'Natural Language :: Chinese (Traditional)',
         'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
-        'Programming Language :: Python :: 3.9'
+        'Programming Language :: Python :: 3.9',
+        'Programming Language :: Python :: 3.10',
     ],
     keywords='middle-chinese historical-linguistics qieyun',
     packages=find_packages('src'),
     package_dir={'': 'src'},
-    python_requires='>=3.6, <4',
+    python_requires='>=3.7, <4',
     entry_points={},
     project_urls={
         'Bug Reports': 'https://github.com/nk2028/qieyun-encoder-python/issues',
