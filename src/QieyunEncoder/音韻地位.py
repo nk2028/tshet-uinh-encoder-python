@@ -735,7 +735,7 @@ class 音韻地位:
                 break
         if 更優音韻地位 == self:
             更優音韻地位 = None
-        return 合法性等級.到字符串(合法性), 更優音韻地位
+        return 合法性.字符串, 更優音韻地位
 
     def __repr__(self) -> str:
         return '<音韻地位 ' + self.描述 + '>'

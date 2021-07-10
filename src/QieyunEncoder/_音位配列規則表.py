@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 
-class 合法性等級:
-    無效, 強非法, 弱非法, 弱合法, 稀有合法, 強合法 = range(6)
-    字符串 = ['無效', '強非法', '弱非法', '弱合法', '稀有合法', '強合法']
+from enum import IntEnum
 
-    def 到字符串(等級: int) -> str:
-        return 合法性等級.字符串[等級]
+class 合法性等級(IntEnum):
+    無效, 強非法, 弱非法, 弱合法, 稀有合法, 強合法 = range(6)
+
+    @property
+    def 字符串(self) -> str:
+        return self.name
 
 
 # 以下規則只適用於更優音韻地位
