@@ -157,7 +157,6 @@ import re
 from typing import Optional
 
 from .常量 import 常量
-from ._母對應的標準等 import 母對應的標準等
 from ._音位配列規則表 import 合法性等級, 音位配列規則表
 from .工具.母到清濁 import 母到清濁
 from .工具.母到組 import 母到組
