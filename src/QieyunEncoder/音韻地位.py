@@ -153,8 +153,9 @@
 其中，仄表示上去入聲，舒表示平上去聲。
 '''
 
+from __future__ import annotations  # PEP 563, for Python < 3.10
 import re
-from typing import Optional
+from typing import Optional, Tuple
 
 from .常量 import 常量
 from ._音位配列規則表 import 合法性等級, 音位配列規則表
@@ -512,7 +513,7 @@ class 音韻地位:
             assert 等 in '二三', 'Unexpected 等: ' + repr(等)
 
     @staticmethod
-    def from編碼(編碼: str):
+    def from編碼(編碼: str) -> 音韻地位:
         '''
         將音韻編碼轉換爲音韻地位。
         '''
@@ -579,7 +580,7 @@ class 音韻地位:
         return 音韻地位(母, 呼, 等, 重紐, 韻, 聲)
 
     @staticmethod
-    def from描述(描述: str):
+    def from描述(描述: str) -> 音韻地位:
         '''
         將音韻描述或最簡音韻描述轉換爲音韻地位。
         '''
@@ -612,7 +613,7 @@ class 音韻地位:
 
         return 音韻地位(母, 呼, 等, 重紐, 韻, 聲)
 
-    def 合法性(self) -> tuple[str, Optional['音韻地位']]:
+    def 合法性(self) -> Tuple[str, Optional[音韻地位]]:
         '''
         聲、韻、調組合的合法性。
         如果有等價但更優的音韻地位能作爲替代，那麼也返回更優音韻地位，合法性取原地位和更優地位中的較差者。
