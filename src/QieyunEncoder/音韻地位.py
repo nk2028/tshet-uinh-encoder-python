@@ -164,7 +164,7 @@ from ._拓展音韻屬性 import 母到清濁, 母到音, 母到組, 韻到攝
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢眞臻文欣元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
 
-解析音韻描述 = re.compile('([%s])([%s]?)([%s]?)([%s]?)([%s])([%s])' % (
+解析音韻描述 = re.compile('([%s])([%s])?([%s])?([%s])?([%s])([%s])' % (
     常量.所有母, 常量.所有呼, 常量.所有等, 常量.所有重紐, 常量.所有韻, 常量.所有聲))
 
 特別編碼 = {0: ('東', '一'), 1: ('東', '三'), 37: ('歌', '一'), 38: ('歌', '三'),
@@ -669,12 +669,6 @@ class 音韻地位:
         assert match is not None
 
         母, 呼, 等, 重紐, 韻, 聲 = match.groups()
-        if not 呼:
-            呼 = None
-        if not 等:
-            等 = None
-        if not 重紐:
-            重紐 = None
 
         if 呼 is None and 母 not in '幫滂並明':
             if 韻 in 常量.必爲開口的韻:
