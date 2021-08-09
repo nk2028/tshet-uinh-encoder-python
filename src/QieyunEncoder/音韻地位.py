@@ -628,5 +628,51 @@ class 音韻地位:
             return False
         return self.最簡描述 == that.最簡描述
 
+    def __lt__(self, that) -> bool:
+        if not isinstance(that, 音韻地位):
+            raise TypeError(
+                "'<' not supported between instances of '音韻地位' and " + type(that).__name__)
+
+        def 母到編碼(母):
+            return 常量.所有母.index(母)
+
+        def 呼到編碼(呼):
+            return [None, '開', '合'].index(呼)
+
+        def 等到編碼(等):
+            return '一二三四'.index(等)
+
+        def 重紐到編碼(重紐):
+            return [None, 'A', 'B'].index(重紐)
+
+        def 韻到編碼(韻):
+            return 常量.所有韻.index(韻)
+
+        def 聲到編碼(聲):
+            return 常量.所有聲.index(聲)
+
+        return (
+            聲到編碼(self.聲),
+            韻到編碼(self.韻),
+            重紐到編碼(self.重紐),
+            等到編碼(self.等),
+            呼到編碼(self.呼),
+            母到編碼(self.母),
+        ) < (
+            聲到編碼(that.聲),
+            韻到編碼(that.韻),
+            重紐到編碼(that.重紐),
+            等到編碼(that.等),
+            呼到編碼(that.呼),
+            母到編碼(that.母),
+        )
+
+    def __le__(self, that) -> bool:
+        if not isinstance(that, 音韻地位):
+            raise TypeError(
+                "'<' not supported between instances of '音韻地位' and " + type(that).__name__)
+
+        return self == that or self < that
+
     def __hash__(self) -> int:
         return hash(self.最簡描述)
