@@ -161,6 +161,7 @@ from ._母對應的標準等 import 母對應的標準等
 from .工具.母到清濁 import 母到清濁
 from .工具.母到組 import 母到組
 from .工具.母到音 import 母到音
+from .工具.母與等到類 import 母與等到類
 from .工具.韻到攝 import 韻到攝
 
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -242,6 +243,15 @@ class 音韻地位:
         ```
         '''
         return 韻到攝(self.韻)
+
+    @property
+    def 類(self) -> str:
+        '''
+        五十一聲類。
+
+        注意五十一聲類中俟母獨立，故實為五十二個。
+        '''
+        return 母與等到類(self.母, self.等)
 
     @property
     def 描述(self) -> str:
