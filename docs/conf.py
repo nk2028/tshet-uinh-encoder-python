@@ -10,9 +10,9 @@ sys.path.insert(0, os.path.abspath('../src'))
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'QieyunEncoder'
-copyright = '2024, nk2028 Developers'
-author = 'nk2028 Developers'
+project = 'Qieyun Encoder Python'
+copyright = '2021-2024, nk2028 Developers'
+author = 'nk2028 開發者'
 release = '0.4.3'
 
 # -- General configuration ---------------------------------------------------
