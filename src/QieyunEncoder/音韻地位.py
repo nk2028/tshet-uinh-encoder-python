@@ -474,7 +474,7 @@ class 音韻地位:
         return self.描述 == that.描述
 
     @staticmethod
-    def 驗證(母: str, 呼: Optional[str], 等: str, 重紐: Optional[str], 韻: str, 聲: str):
+    def 驗證(母: str, 呼: str | None, 等: str, 重紐: str | None, 韻: str, 聲: str):
         '''
         驗證給定的音韻地位六要素是否合法。
         '''
