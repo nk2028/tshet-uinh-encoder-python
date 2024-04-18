@@ -3,7 +3,7 @@
 import re
 
 from . import 常量
-from .變換 import 母到清濁, 母到音, 母到組, 韻到攝, 母與等到類
+from .轉換 import 母到清濁, 母到音, 母到組, 韻到攝, 母與等到類
 
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢真臻文殷元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
@@ -510,8 +510,7 @@ class 音韻地位:
 
     def __lt__(self, that) -> bool:
         if not isinstance(that, 音韻地位):
-            raise TypeError(
-                "'<' not supported between instances of '音韻地位' and " + type(that).__name__)
+            raise TypeError("'<' not supported between instances of '音韻地位' and " + type(that).__name__)
 
         def 母到編碼(母):
             return 常量.所有母.index(母)

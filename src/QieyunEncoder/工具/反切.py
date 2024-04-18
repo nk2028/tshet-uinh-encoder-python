@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 
-'''
-根據反切規律自動完成反切過程。
-'''
-
-from typing import List
 from .. import 常量
-from ..音韻地位 import 音韻地位
 from .._母對應的標準等 import 母對應的標準等
+from ..音韻地位 import 音韻地位
 
-
-def _jointer(xs: List[str]):
+def _jointer(xs: list[str]):
     '''
     將多個字串以頓號和「或」字連接。
 
@@ -24,7 +18,6 @@ def _jointer(xs: List[str]):
         'A、B、C或D'
     '''
     return ''.join(x + '、' for x in xs[:-2]) + '或'.join(xs[-2:])
-
 
 def 反切(上字音韻地位: 音韻地位, 下字音韻地位: 音韻地位, 顯示步驟=False, 類隔切=False):
     '''

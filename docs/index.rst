@@ -10,7 +10,7 @@ Qieyun Encoder Python 說明文件
    :maxdepth: 1
 
    常量
-   變換
+   轉換
    音韻地位
    工具
 
@@ -57,7 +57,7 @@ Qieyun Encoder Python 說明文件
 
    不要與中古後期三十六字母混淆。
    
-   中古後期三十六字母:
+   中古後期三十六字母：
 
     .. raw:: html
 
