@@ -5,3 +5,4 @@ from .母到清濁 import 母到清濁
 from .母到組 import 母到組
 from .母到音 import 母到音
 from .韻到攝 import 韻到攝
+from .母與等到類 import 母與等到類

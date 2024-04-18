@@ -3,7 +3,7 @@
 import re
 
 from . import 常量
-from .變換 import 母到清濁, 母到音, 母到組, 韻到攝
+from .變換 import 母到清濁, 母到音, 母到組, 韻到攝, 母與等到類
 
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢真臻文殷元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
@@ -146,11 +146,13 @@ class 音韻地位:
         聲 = self.聲
 
         if 韻 not in 常量.開合兼備的韻:
-            呼 = None
+            呼 = ''
         if 韻 not in 常量.一三等韻 and 韻 not in 常量.二三等韻:
-            等 = None
+            等 = ''
+        if 重紐 is None:
+            重紐 = ''
 
-        return 母 + (呼 or '') + (等 or '') + (重紐 or '') + 韻 + 聲
+        return f'{母}{呼}{等}{重紐}{韻}{聲}'
 
     @property
     def 表達式(self) -> str:
@@ -198,7 +200,7 @@ class 音韻地位:
         if 韻 not in 常量.開合兼備的韻:
             呼 = None
         if 韻 not in 常量.一三等韻 and 韻 not in 常量.二三等韻:
-            等 = None
+            等 = ''
 
         呼字段 = f'{呼}口 ' if 呼 else ''
         等字段 = f'{等}等 ' if 等 else ''
@@ -403,8 +405,8 @@ class 音韻地位:
         聲編碼 = 其他編碼 & 0b11
 
         母 = 常量.所有母[母編碼]
-        呼 = 常量.所有呼[呼編碼]
-        重紐 = 常量.所有重紐[重紐編碼]
+        呼: str | None = 常量.所有呼[呼編碼]
+        重紐: str | None = 常量.所有重紐[重紐編碼]
         聲 = 常量.所有聲[聲編碼]
 
         if 韻編碼 == 0:
@@ -483,6 +485,8 @@ class 音韻地位:
                 等 = '三'
             elif 韻 in 常量.四等韻:
                 等 = '四'
+            else:
+                raise ValueError(f'Unexpected 韻: {韻}')
 
         音韻地位.驗證(母, 呼, 等, 重紐, 韻, 聲)
 
