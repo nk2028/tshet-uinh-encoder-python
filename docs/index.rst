@@ -10,6 +10,7 @@ Qieyun Encoder Python 說明文件
    :maxdepth: 1
 
    常量
+   變換
    音韻地位
    工具
 

@@ -3,8 +3,8 @@
 import re
 from typing import Optional, Union
 
-from .工具.韻目到韻 import 韻目到韻
-from .常量 import 常量
+from .變換 import 韻目到韻
+from . import 常量
 
 _韻鏡母位置表 = [
     '脣音第一位', '脣音第二位', '脣音第三位', '脣音第四位',

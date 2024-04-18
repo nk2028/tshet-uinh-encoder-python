@@ -6,7 +6,7 @@
 
 from ..音韻地位 import 音韻地位
 from ..韻鏡位置 import 韻鏡位置
-from ..常量 import 常量
+from .. import 常量
 
 
 def 韻鏡位置到音韻地位(當前韻鏡位置: 韻鏡位置) -> 音韻地位:

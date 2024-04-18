@@ -1,0 +1,8 @@
+QieyunEncoder.變換
+==================
+
+.. automodule:: QieyunEncoder.變換
+   :imported-members:
+   :members:
+   :undoc-members:
+   :show-inheritance:
