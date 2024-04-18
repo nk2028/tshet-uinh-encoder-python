@@ -9,7 +9,7 @@ from .轉換 import 母到清濁, 母到音, 母到組, 韻到攝, 母與等到�
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢真臻文殷元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
 
-解析音韻描述 = re.compile(fr'([{常量.所有母}])([{常量.所有呼}]?)([{常量.所有等}]?)([{常量.所有重紐}]?)([{常量.所有韻}])([{常量.所有聲}])')
+解析音韻描述 = re.compile(fr'([{常量.所有母}])([{常量.所有呼}])?([{常量.所有等}])?([{常量.所有重紐}])?([{常量.所有韻}])([{常量.所有聲}])')
 
 class 音韻地位:
     '''
@@ -17,7 +17,7 @@ class 音韻地位:
 
     :param 母: 聲母
     :type 母: str
-    :param 呼: 呼（開口呼/合口呼），可以爲 ``None``
+    :param 呼: 呼（開/合），可以爲 ``None``
     :type 呼: str, optional
     :param 等: 等
     :type 等: str
@@ -368,12 +368,10 @@ class 音韻地位:
         elif 韻 in 常量.必爲合口的韻:
             assert 呼 == '合'
         else:
-            assert 呼 is not None and len(
-                呼) == 1 and 呼 in 常量.所有呼, 'Unexpected 呼: ' + repr(呼)
+            assert 呼 is not None and len(呼) == 1 and 呼 in 常量.所有呼, 'Unexpected 呼: ' + repr(呼)
 
         if 母 in 常量.重紐母 and 韻 in 常量.重紐韻:
-            assert 重紐 is not None and len(
-                重紐) == 1 and 重紐 in 常量.所有重紐, 'Unexpected 重紐: ' + repr(重紐)
+            assert 重紐 is not None and len(重紐) == 1 and 重紐 in 常量.所有重紐, 'Unexpected 重紐: ' + repr(重紐)
         else:
             assert 重紐 is None, 'Unexpected 重紐: ' + repr(重紐)
 
@@ -410,40 +408,41 @@ class 音韻地位:
         重紐: str | None = 常量.所有重紐[重紐編碼]
         聲 = 常量.所有聲[聲編碼]
 
-        if 韻編碼 == 0:
-            韻 = '東'
-            等 = '一'
-        elif 韻編碼 == 1:
-            韻 = '東'
-            等 = '三'
-        elif 韻編碼 == 37:
-            韻 = '歌'
-            等 = '一'
-        elif 韻編碼 == 38:
-            韻 = '歌'
-            等 = '三'
-        elif 韻編碼 == 39:
-            韻 = '麻'
-            等 = '二'
-        elif 韻編碼 == 40:
-            韻 = '麻'
-            等 = '三'
-        elif 韻編碼 == 43:
-            韻 = '庚'
-            等 = '二'
-        elif 韻編碼 == 44:
-            韻 = '庚'
-            等 = '三'
-        else:
-            韻 = 韻順序表[韻編碼]
-            if 韻 in 常量.一等韻:
+        match 韻編碼:
+            case 0:
+                韻 = '東'
                 等 = '一'
-            elif 韻 in 常量.二等韻:
-                等 = '二'
-            elif 韻 in 常量.三等韻:
+            case 1:
+                韻 = '東'
                 等 = '三'
-            elif 韻 in 常量.四等韻:
-                等 = '四'
+            case 37:
+                韻 = '歌'
+                等 = '一'
+            case 38:
+                韻 = '歌'
+                等 = '三'
+            case 39:
+                韻 = '麻'
+                等 = '二'
+            case 40:
+                韻 = '麻'
+                等 = '三'
+            case 43:
+                韻 = '庚'
+                等 = '二'
+            case 44:
+                韻 = '庚'
+                等 = '三'
+            case _:
+                韻 = 韻順序表[韻編碼]
+                if 韻 in 常量.一等韻:
+                    等 = '一'
+                elif 韻 in 常量.二等韻:
+                    等 = '二'
+                elif 韻 in 常量.三等韻:
+                    等 = '三'
+                elif 韻 in 常量.四等韻:
+                    等 = '四'
 
         if 母 in '幫滂並明' or 韻 in 常量.開合中立的韻:
             assert 呼 == '開'
@@ -531,27 +530,12 @@ class 音韻地位:
         def 聲到編碼(聲):
             return 常量.所有聲.index(聲)
 
-        return (
-            聲到編碼(self.聲),
-            韻到編碼(self.韻),
-            重紐到編碼(self.重紐),
-            等到編碼(self.等),
-            呼到編碼(self.呼),
-            母到編碼(self.母),
-        ) < (
-            聲到編碼(that.聲),
-            韻到編碼(that.韻),
-            重紐到編碼(that.重紐),
-            等到編碼(that.等),
-            呼到編碼(that.呼),
-            母到編碼(that.母),
-        )
+        return (聲到編碼(self.聲), 韻到編碼(self.韻), 重紐到編碼(self.重紐), 等到編碼(self.等), 呼到編碼(self.呼), 母到編碼(self.母)) \
+             < (聲到編碼(that.聲), 韻到編碼(that.韻), 重紐到編碼(that.重紐), 等到編碼(that.等), 呼到編碼(that.呼), 母到編碼(that.母))
 
     def __le__(self, that) -> bool:
         if not isinstance(that, 音韻地位):
-            raise TypeError(
-                "'<' not supported between instances of '音韻地位' and " + type(that).__name__)
-
+            raise TypeError("'<' not supported between instances of '音韻地位' and " + type(that).__name__)
         return self == that or self < that
 
     def __hash__(self) -> int:
