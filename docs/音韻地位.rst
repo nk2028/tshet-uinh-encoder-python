@@ -1,0 +1,7 @@
+QieyunEncoder.音韻地位
+======================
+
+.. automodule:: QieyunEncoder.音韻地位
+   :members:
+   :undoc-members:
+   :show-inheritance:
