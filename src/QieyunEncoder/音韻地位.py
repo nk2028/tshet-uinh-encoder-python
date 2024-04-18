@@ -3,6 +3,7 @@
 import re
 
 from . import 常量
+from ._母對應的標準等 import 母對應的標準等
 from .轉換 import 母到清濁, 母到音, 母到組, 韻到攝, 母與等到類
 
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
