@@ -26,8 +26,6 @@ extensions = [
     'sphinx_autodoc_typehints',
 ]
 
-html_theme = 'sphinx_book_theme'
-
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
@@ -37,4 +35,11 @@ language = 'zh_TW'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_book_theme'
+
+html_theme_options = {
+    'repository_url': 'https://github.com/nk2028/qieyun-encoder-python',
+    'use_repository_button': True,
+    'use_issues_button': True,
+}
+
 html_static_path = ['_static']

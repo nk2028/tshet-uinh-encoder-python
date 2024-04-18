@@ -5,7 +5,7 @@
 '''
 
 from typing import List
-from ..常量 import 常量
+from .. import 常量
 from ..音韻地位 import 音韻地位
 from .._拓展音韻屬性 import 母到標準等
 

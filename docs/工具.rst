@@ -1,7 +1,7 @@
-QieyunEncoder
-=============
+QieyunEncoder.工具
+==================
 
-.. automodule:: QieyunEncoder
+.. automodule:: QieyunEncoder.工具
    :imported-members:
    :members:
    :undoc-members:

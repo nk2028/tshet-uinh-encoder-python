@@ -1,24 +1,34 @@
 # -*- coding: utf-8 -*-
 
 import re
-from typing import Optional
 
-from .常量 import 常量
+from . import 常量
 from ._拓展音韻屬性 import 母到清濁, 母到音, 母到組, 韻到攝
 
 編碼表 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 韻順序表 = '東_冬鍾江支脂之微魚虞模齊祭泰佳皆夬灰咍廢眞臻文欣元魂痕寒刪山仙先蕭宵肴豪歌_麻_陽唐庚_耕清青蒸登尤侯幽侵覃談鹽添咸銜嚴凡'
 
-解析音韻描述 = re.compile('([%s])([%s]?)([%s]?)([%s]?)([%s])([%s])' % (
-    常量.所有母, 常量.所有呼, 常量.所有等, 常量.所有重紐, 常量.所有韻, 常量.所有聲))
-
+解析音韻描述 = re.compile(fr'([{常量.所有母}])([{常量.所有呼}]?)([{常量.所有等}]?)([{常量.所有重紐}]?)([{常量.所有韻}])([{常量.所有聲}])')
 
 class 音韻地位:
     '''
     切韻音系音韻地位。
+
+    :param 母: 聲母
+    :type 母: str
+    :param 呼: 呼（開口呼/合口呼），可以爲 ``None``
+    :type 呼: str, optional
+    :param 等: 等
+    :type 等: str
+    :param 重紐: 重紐，可以爲 ``None``
+    :type 重紐: str, optional
+    :param 韻: 韻
+    :type 韻: str
+    :param 聲: 聲調
+    :type 聲: str
     '''
 
-    def __init__(self, 母, 呼, 等, 重紐, 韻, 聲):
+    def __init__(self, 母: str, 呼: str | None, 等: str, 重紐: str | None, 韻: str, 聲: str):
         音韻地位.驗證(母, 呼, 等, 重紐, 韻, 聲)
 
         self.母 = 母
@@ -57,7 +67,7 @@ class 音韻地位:
         return 母到音[self.母]
 
     @property
-    def 組(self) -> Optional[str]:
+    def 組(self) -> str | None:
         '''
         組。
 
@@ -322,7 +332,21 @@ class 音韻地位:
     def 驗證(母: str, 呼: str | None, 等: str, 重紐: str | None, 韻: str, 聲: str):
         '''
         驗證給定的音韻地位六要素是否合法。
+
+        :param 母: 聲母
+        :type 母: str
+        :param 呼: 呼（開口呼/合口呼），可以爲 ``None``
+        :type 呼: str, optional
+        :param 等: 等
+        :type 等: str
+        :param 重紐: 重紐，可以爲 ``None``
+        :type 重紐: str, optional
+        :param 韻: 韻
+        :type 韻: str
+        :param 聲: 聲調
+        :type 聲: str
         '''
+
         assert len(母) == 1 and 母 in 常量.所有母, 'Unexpected 母: ' + repr(母)
         assert len(等) == 1 and 等 in 常量.所有等, 'Unexpected 等: ' + repr(等)
         assert len(韻) == 1 and 韻 in 常量.所有韻, 'Unexpected 韻: ' + repr(韻)

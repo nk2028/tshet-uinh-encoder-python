@@ -1,0 +1,7 @@
+QieyunEncoder.常量
+==================
+
+.. automodule:: QieyunEncoder.常量
+   :members:
+   :undoc-members:
+   :show-inheritance:
