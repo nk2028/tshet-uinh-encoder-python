@@ -3,7 +3,6 @@ import TshetUinhEncoder as TE
 
 here = path.abspath(path.dirname(__file__))
 
-
 def roundtrip1(母, 呼, 等, 重紐, 韻, 聲):
     '''
     將音韻地位六要素轉換爲音韻編碼，再將音韻編碼轉換爲音韻地位六要素。
@@ -13,7 +12,6 @@ def roundtrip1(母, 呼, 等, 重紐, 韻, 聲):
     音韻地位 = TE.音韻地位(母, 呼, 等, 重紐, 韻, 聲)
     assert TE.音韻地位.from編碼(音韻地位.編碼) == 音韻地位
 
-
 def roundtrip2(母, 呼, 等, 重紐, 韻, 聲):
     '''
     將音韻地位六要素轉換爲音韻描述，再將音韻描述轉換爲音韻地位六要素。
@@ -22,7 +20,6 @@ def roundtrip2(母, 呼, 等, 重紐, 韻, 聲):
     '''
     音韻地位 = TE.音韻地位(母, 呼, 等, 重紐, 韻, 聲)
     assert TE.音韻地位.from描述(音韻地位.描述) == 音韻地位
-
 
 def test1():
     '''
