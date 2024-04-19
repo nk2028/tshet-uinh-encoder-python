@@ -13,7 +13,7 @@ sys.path.insert(0, os.path.abspath('../src'))
 project = 'Tshet-uinh Encoder Python'
 copyright = '2021-2024, nk2028 Developers'
 author = 'nk2028 開發者'
-release = '0.4.3'
+release = '0.6.0'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
