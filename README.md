@@ -1,18 +1,18 @@
-# Qieyun Encoder Python
+# Tshet-uinh Encoder Python
 
-A Python library for the operating the basic structure of the Qieyun phonological system
+A Python library for the operating the basic structure of the Tshet-uinh phonological system
 
 ## Install
 
 ```sh
-$ pip install qieyun-encoder
+$ pip install tshet-uinh-encoder
 ```
 
 ## Usage
 
 ```python
-import QieyunEncoder as QE
-print(QE.音韻地位.from描述('幫三凡入').攝)  # output: 咸
+import TshetUinhEncoder as TE
+print(TE.音韻地位.from描述('幫三凡入').攝)  # output: 咸
 ```
 
-For detailed usage, see [documentation](https://qieyun-encoder-python.readthedocs.io).
+For detailed usage, see [documentation](https://tshet-uinh-encoder-python.readthedocs.io).

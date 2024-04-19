@@ -1,5 +1,5 @@
-QieyunEncoder.常量
-==================
+TshetUinhEncoder.常量
+=====================
 
 .. raw:: html
 
@@ -7,7 +7,7 @@ QieyunEncoder.常量
     .property > .pre { white-space: pre-wrap }
     </style>
 
-.. automodule:: QieyunEncoder.常量
+.. automodule:: TshetUinhEncoder.常量
    :members:
    :undoc-members:
    :show-inheritance:

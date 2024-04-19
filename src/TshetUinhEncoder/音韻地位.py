@@ -47,9 +47,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').清濁
+            >>> 音韻地位.from描述('幫三凡入').清濁
             '全清'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').清濁
+            >>> 音韻地位.from描述('羣開三A支平').清濁
             '全濁'
         '''
         return 母到清濁(self.母)
@@ -61,9 +61,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').音
+            >>> 音韻地位.from描述('幫三凡入').音
             '脣'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').音
+            >>> 音韻地位.from描述('羣開三A支平').音
             '牙'
         '''
         return 母到音(self.母)
@@ -75,9 +75,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').組
+            >>> 音韻地位.from描述('幫三凡入').組
             '幫'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').組
+            >>> 音韻地位.from描述('羣開三A支平').組
             '見'
         '''
         return 母到組(self.母)
@@ -89,9 +89,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').攝
+            >>> 音韻地位.from描述('幫三凡入').攝
             '咸'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').攝
+            >>> 音韻地位.from描述('羣開三A支平').攝
             '止'
         '''
         return 韻到攝(self.韻)
@@ -105,9 +105,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').類
+            >>> 音韻地位.from描述('幫三凡入').類
             '方'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').類
+            >>> 音韻地位.from描述('羣開三A支平').類
             '渠'
         '''
         return 母與等到類(self.母, self.等)
@@ -119,9 +119,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').描述
+            >>> 音韻地位.from描述('幫三凡入').描述
             '幫三凡入'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').描述
+            >>> 音韻地位.from描述('羣開三A支平').描述
             '羣開三A支平'
         '''
         母 = self.母
@@ -140,9 +140,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').最簡描述
+            >>> 音韻地位.from描述('幫三凡入').最簡描述
             '幫凡入'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').最簡描述
+            >>> 音韻地位.from描述('羣開三A支平').最簡描述
             '羣開A支平'
         '''
         母 = self.母
@@ -168,9 +168,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').表達式
+            >>> 音韻地位.from描述('幫三凡入').表達式
             '幫母 三等 凡韻 入聲'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').表達式
+            >>> 音韻地位.from描述('羣開三A支平').表達式
             '羣母 開口 三等 重紐A類 支韻 平聲'
         '''
         母 = self.母
@@ -192,9 +192,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').最簡表達式
+            >>> 音韻地位.from描述('幫三凡入').最簡表達式
             '幫母 凡韻 入聲'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').最簡表達式
+            >>> 音韻地位.from描述('羣開三A支平').最簡表達式
             '羣母 開口 重紐A類 支韻 平聲'
         '''
         母 = self.母
@@ -223,9 +223,9 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').編碼
+            >>> 音韻地位.from描述('幫三凡入').編碼
             'A9D'
-            >>> QieyunEncoder.音韻地位.from描述('羣開三A支平').編碼
+            >>> 音韻地位.from描述('羣開三A支平').編碼
             'fFA'
         '''
         母 = self.母
@@ -254,11 +254,11 @@ class 音韻地位:
 
         Examples:
 
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').屬於('章母')
+            >>> 音韻地位.from描述('幫三凡入').屬於('章母')
             False
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').屬於('一四等')
+            >>> 音韻地位.from描述('幫三凡入').屬於('一四等')
             False
-            >>> QieyunEncoder.音韻地位.from描述('幫三凡入').屬於('幫組 或 陽韻')
+            >>> 音韻地位.from描述('幫三凡入').屬於('幫組 或 陽韻')
             True
         '''
         def inner(q: str):
