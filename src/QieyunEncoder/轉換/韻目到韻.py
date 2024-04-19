@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import warnings
+
 # 經典韻系
 
 # 首字爲 `QieyunEncoder` 認定的標準韻，之後爲非標準韻
@@ -87,4 +89,7 @@ def 韻目到韻(韻: str) -> str:
         >>> 韻目到韻('東')
         '東'
     '''
+    if 韻 == '驗':
+        warning = "There is more confusion between 鹽B and 嚴 in 集韻, so '驗' (廣韻鹽B) becomes 嚴 in 集韻"
+        warnings.warn(warning)
     return _標準韻映射表[韻]
