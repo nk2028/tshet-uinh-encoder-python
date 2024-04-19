@@ -38,12 +38,3 @@ def test1():
                 重紐 = None
             roundtrip1(母, 呼, 等, 重紐, 韻, 聲)
             roundtrip2(母, 呼, 等, 重紐, 韻, 聲)
-
-
-def test2():
-    '''
-    測試正則化韻。
-    '''
-    assert QieyunEncoder.正則化韻('物') == '文'
-    assert QieyunEncoder.正則化韻('敬') == '庚'
-    assert QieyunEncoder.正則化韻('東') == '東'

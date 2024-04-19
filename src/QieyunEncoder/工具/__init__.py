@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-'''
-與切韻音系相關的工具。
-'''
-
 from .反切 import 反切
-from .正則化韻 import 正則化韻
+from .音韻地位到韻鏡位置 import 音韻地位到韻鏡位置
+from .音韻屬性到韻鏡位置們 import 音韻屬性到韻鏡位置們
+from .韻鏡位置到音韻地位 import 韻鏡位置到音韻地位

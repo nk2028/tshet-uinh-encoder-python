@@ -1,0 +1,7 @@
+QieyunEncoder.韻鏡位置
+======================
+
+.. automodule:: QieyunEncoder.韻鏡位置
+   :members:
+   :undoc-members:
+   :show-inheritance:
