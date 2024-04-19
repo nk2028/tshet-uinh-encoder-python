@@ -1,7 +1,7 @@
-QieyunEncoder.轉換
-==================
+TshetUinhEncoder.轉換
+=====================
 
-.. automodule:: QieyunEncoder.轉換
+.. automodule:: TshetUinhEncoder.轉換
    :imported-members:
    :members:
    :undoc-members:

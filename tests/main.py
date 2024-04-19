@@ -1,5 +1,5 @@
 from os import path
-import QieyunEncoder
+import TshetUinhEncoder as TE
 
 here = path.abspath(path.dirname(__file__))
 
@@ -10,8 +10,8 @@ def roundtrip1(母, 呼, 等, 重紐, 韻, 聲):
 
     用於測試轉換是否出現異常，以及轉換結果與轉換前是否一致。
     '''
-    音韻地位 = QieyunEncoder.音韻地位(母, 呼, 等, 重紐, 韻, 聲)
-    assert QieyunEncoder.音韻地位.from編碼(音韻地位.編碼) == 音韻地位
+    音韻地位 = TE.音韻地位(母, 呼, 等, 重紐, 韻, 聲)
+    assert TE.音韻地位.from編碼(音韻地位.編碼) == 音韻地位
 
 
 def roundtrip2(母, 呼, 等, 重紐, 韻, 聲):
@@ -20,8 +20,8 @@ def roundtrip2(母, 呼, 等, 重紐, 韻, 聲):
 
     用於測試轉換是否出現異常，以及轉換結果與轉換前是否一致。
     '''
-    音韻地位 = QieyunEncoder.音韻地位(母, 呼, 等, 重紐, 韻, 聲)
-    assert QieyunEncoder.音韻地位.from描述(音韻地位.描述) == 音韻地位
+    音韻地位 = TE.音韻地位(母, 呼, 等, 重紐, 韻, 聲)
+    assert TE.音韻地位.from描述(音韻地位.描述) == 音韻地位
 
 
 def test1():

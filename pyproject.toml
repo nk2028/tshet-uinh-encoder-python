@@ -6,11 +6,11 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [project]
-name = "qieyun-encoder"
+name = "tshet-uinh-encoder"
 authors = [
   { name="nk2028 Developers", email="support@nk2028.shn.hk" },
 ]
-description = "A Python library for the operating the basic structure of the Qieyun phonological system"
+description = "A Python library for the operating the basic structure of the Tshet-uinh phonological system"
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
@@ -25,8 +25,8 @@ dependencies = []
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/nk2028/qieyun-encoder-python"
-Issues = "https://github.com/nk2028/qieyun-encoder-python/issues"
+Homepage = "https://github.com/nk2028/tshet-uinh-encoder-python"
+Issues = "https://github.com/nk2028/tshet-uinh-encoder-python/issues"
 
 [tool.setuptools.dynamic]
-version = {attr = "QieyunEncoder.__version__"}
+version = {attr = "TshetUinhEncoder.__version__"}
